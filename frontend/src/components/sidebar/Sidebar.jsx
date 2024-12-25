@@ -6,7 +6,7 @@ import LogoutButton from "./LogoutButton.jsx";
 const Sidebar = () => {
   return (
     <div className="px-2">
-      <SearchInput  />
+      <SearchInput />
       <div className="divider px-3 h-1" />
       <Conversation />
       <LogoutButton />

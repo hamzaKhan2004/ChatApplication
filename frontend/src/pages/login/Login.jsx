@@ -1,24 +1,36 @@
-// eslint-disable-next-line no-unused-vars
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import useLogin from "../../hooks/useLogin";
 
 const Login = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { loading, login } = useLogin();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await login(username, password);
+  };
   return (
-    <div className="flex flex-col items-center justify-center min-w-96 mx-auto">
-      <div className="w-full p-6 rounded-lg shadow-md bg-gray-300 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0 ">
+    <div className="flex flex-col items-center justify-center min-w-96 mx-auto ">
+      <div className="w-full p-6 rounded-lg shadow-md bg-gray-300 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0 border border-zinc-600 hover:border-zinc-500 transition ease-in-out">
         <h1 className="text-3xl font-semibold text-center text-gray-300">
           Login
-          <span className="text-blue-500"> ChatApp</span>
+          <span className="text-sky-500"> ChatApp</span>
         </h1>
 
-        <form action="">
+        <form onSubmit={handleSubmit}>
           <div>
             <label className="label p-2">
-              <span className="label-text text-lg pt-2">Username</span>
+              <span className="label-text text-lg pt-2">username</span>
             </label>
             <input
               type="text"
               placeholder="Enter Username "
               className="w-full input input-bordered h-10"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
 
@@ -30,15 +42,27 @@ const Login = () => {
               type="password"
               placeholder="Enter Password "
               className="w-full input input-bordered h-10"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
-          <a
-            href="#"
-            className="text-sm pl-24 hover:underline hover:text-blue-500 mt-2 inline-block"
+          <Link
+            to="/signup"
+            className="text-sm pl-24 hover:underline hover:text-blue-500 mt-2 inline-block transition ease-in-out"
           >
             {"Don't"} have an account?
-          </a>
+          </Link>
+
+          <div>
+            <button
+              className="btn btn-block btn-sm mt-2 border bordare-slate-700 h-10"
+              type="submit"
+              disabled={loading}
+            >
+              {loading ? <span className="loading loading-spinner" /> : "Login"}
+            </button>
+          </div>
         </form>
       </div>
     </div>
